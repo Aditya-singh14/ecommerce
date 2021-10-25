@@ -7,19 +7,45 @@ class Category(models.Model):
     slug=models.SlugField(max_length=200,blank=True)
 
     def save(self , *args, **kwargs):
-        self.slug=slugify(self.category_name)
+        self.slug=slugify(self.category_name)     # django save method is override
         super(Category,self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.category_name
+        return self.category_name                 # save by category name
+
+
+class Sub_Category(models.Model):
+    name=models.CharField(max_length=100)
+    category=models.ForeignKey(Category,on_delete=models.CASCADE)
+
+class ColorVariant(models.Model):                     #class for different color variant
+    color_name=models.CharField(max_length=100)   
+    color_code=models.CharField(max_length=100)
+    def __str__(self):
+        return self.color_name                     # save by color name
+
+class QuantityVariant(models.Model):                  #class for different Quantity variant
+    varient_name=models.CharField(max_length=100)
+    def __str__(self):
+        return self.varient_name                   # save by varient name
+
+class SizeVariant(models.Model):                      #class for different size variant
+    size_name=models.CharField(max_length=100)
+    def __str__(self):
+        return self.size_name                      # save by size name
+
 
 class Product(models.Model):
-    category=models.ForeignKey(Category,on_delete=models.CASCADE)
+    category=models.ForeignKey(Category,on_delete=models.CASCADE)    # on_delete=models.CASCADE: Related product also gets deleted
     product_name=models.CharField(max_length=100)
     image=models.ImageField(upload_to='static/products')
     price=models.CharField(max_length=20)
     decription=models.TextField()
     stock=models.IntegerField(default=100)
 
+    quantity_type=models.ForeignKey(QuantityVariant, blank=True,null=True,on_delete=models.PROTECT)
+    color_type=models.ForeignKey(ColorVariant, blank=True,null=True,on_delete=models.PROTECT)
+    size_type=models.ForeignKey(SizeVariant, blank=True,null=True,on_delete=models.PROTECT)
+
     def __str__(self):
-        return self.product_name
+        return self.product_name                # save by product name

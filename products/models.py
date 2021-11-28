@@ -18,6 +18,9 @@ class Sub_Category(models.Model):
     name=models.CharField(max_length=100)
     category=models.ForeignKey(Category,on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.name
+
 class ColorVariant(models.Model):                     #class for different color variant
     color_name=models.CharField(max_length=100)   
     color_code=models.CharField(max_length=100)
@@ -36,7 +39,8 @@ class SizeVariant(models.Model):                      #class for different size 
 
 
 class Product(models.Model):
-    category=models.ForeignKey(Category,on_delete=models.CASCADE)    # on_delete=models.CASCADE: Related product also gets deleted
+    category=models.ForeignKey(Category,on_delete=models.CASCADE,null=False,default='') # on_delete=models.CASCADE: Related product also gets deleted
+    sub_category=models.ForeignKey(Sub_Category,on_delete=models.CASCADE,null=False,default='')
     product_name=models.CharField(max_length=100)
     image=models.ImageField(upload_to='static/products')
     price=models.CharField(max_length=20)

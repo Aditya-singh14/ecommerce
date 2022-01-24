@@ -86,8 +86,8 @@
                             <div id="{{cat.id}}" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <ul>
-                                        {% for j in cat.sub_category_set.all %}
-                                        <li><a href="#">{{j.name}} </a></li>
+                                        {% for i in cat.sub_category_set.all %}
+                                        <li><a href="/?category={{i.id}}">{{i.name}} </a></li>
                                         {% endfor %}
                                     </ul>
                                 </div>
@@ -134,10 +134,10 @@
                         <div class="product-image-wrapper">
                             <div class="single-products">
                                     <div class="productinfo text-center">
-                                        <img src="{{prod.image}}" alt="" />
+                                        <img src="{{prod.image}}" alt="" height="300px" />
                                         <h2>${{prod.price}}</h2>
                                         <p>{{prod.product_name}}</p>
-                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                        <a href="#"class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                     </div>
                                     <div class="product-overlay">
                                         <div class="overlay-content">
